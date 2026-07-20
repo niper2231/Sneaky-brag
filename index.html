@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook · login</title>
+  <!-- No JavaScript, pure HTML + CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* main card – mimics facebook container */
+    .fb-card {
+      background: white;
+      width: 100%;
+      max-width: 400px;
+      padding: 24px 28px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+
+    /* facebook wordmark (exactly as in ref) */
+    .fb-logo {
+      font-size: 38px;
+      font-weight: 700;
+      color: #1877f2;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+      font-family: 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+      text-shadow: 0 0 0 #1877f2;
+    }
+
+    /* form group */
+    .fb-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .fb-input {
+      width: 100%;
+      padding: 16px 18px;
+      font-size: 17px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      background: white;
+      color: #1c1e21;
+      outline: none;
+      transition: border 0.1s ease;
+    }
+
+    .fb-input:focus {
+      border-color: #1877f2;
+      box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+    }
+
+    .fb-input::placeholder {
+      color: #8a8d91;
+      font-weight: 400;
+      font-size: 17px;
+    }
+
+    /* login button – solid blue */
+    .fb-login-btn {
+      background: #1877f2;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      cursor: default;   /* no JS, just visual */
+      transition: background 0.15s;
+      letter-spacing: 0.2px;
+      margin-top: 6px;
+      line-height: 1.2;
+    }
+
+    .fb-login-btn:hover {
+      background: #166fe5;
+    }
+
+    /* forgotten password link */
+    .forgot-link {
+      display: inline-block;
+      margin: 10px 0 16px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #1877f2;
+      text-decoration: none;
+      cursor: default;
+      transition: underline 0.1s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+      border-bottom-color: #1877f2;
+    }
+
+    /* divider "or" */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 6px 0 12px;
+      gap: 16px;
+      color: #8a8d91;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #dadde1;
+    }
+
+    /* create new account button (green) */
+    .create-btn {
+      background: #42b72a;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      cursor: default;
+      transition: background 0.15s;
+      width: 60%;
+      margin: 6px auto 0;
+      line-height: 1.2;
+    }
+
+    .create-btn:hover {
+      background: #36a420;
+    }
+
+    /* bottom meta links: About · Help · More  */
+    .footer-links {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      font-size: 14px;
+      color: #8a8d91;
+      border-top: 1px solid #dadde1;
+      padding-top: 22px;
+    }
+
+    .footer-links span {
+      cursor: default;
+      transition: color 0.1s;
+    }
+
+    .footer-links span:hover {
+      color: #1c1e21;
+    }
+
+    .footer-links .dot {
+      color: #8a8d91;
+      font-weight: 300;
+      cursor: default;
+    }
+
+    /* Meta© 2022 line */
+    .meta-copy {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #8a8d91;
+      letter-spacing: 0.2px;
+    }
+
+    /* small extra: "or" spacing */
+    .or-text {
+      font-weight: 500;
+    }
+
+    /* responsiveness */
+    @media (max-width: 440px) {
+      .fb-card {
+        padding: 20px 18px 24px;
+      }
+      .fb-logo {
+        font-size: 34px;
+      }
+      .create-btn {
+        width: 80%;
+      }
+    }
+
+    /* mimic facebook's subtle line-height */
+    .fb-login-btn, .create-btn {
+      font-family: 'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* no javascript, all static */
+    .fb-input, .fb-login-btn, .create-btn, .forgot-link, .footer-links span {
+      pointer-events: auto;  /* they are clickable but no JS, just visual */
+    }
+
+    /* extra polish */
+    .fb-card a, .fb-card span {
+      text-decoration: none;
+    }
+
+    /* align "or" with design */
+    .divider {
+      margin: 4px 0 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="fb-card">
+    <!-- Facebook logo -->
+    <div class="fb-logo">facebook</div>
+
+    <!-- form -->
+    <div class="fb-form">
+      <input class="fb-input" type="text" placeholder="Mobile number or email address" aria-label="Mobile number or email address">
+      <input id="passInput" class="fb-input" type="password" placeholder="Password" aria-label="Password">
+      <div onclick="login()" class="fb-login-btn">Log In</div>
+    </div>
+
+    <!-- forgotten password -->
+    <div style="margin-top: 2px;">
+      <a href="#" class="forgot-link" style="cursor: default;">Forgotten password?</a>
+    </div>
+
+    <!-- divider with "or" -->
+    <div class="divider">
+      <span class="or-text">or</span>
+    </div>
+
+    <!-- create new account button -->
+    <div class="create-btn">Create New Account</div>
+
+    <!-- footer links: About · Help · More -->
+    <div class="footer-links">
+      <span>About</span>
+      <span class="dot">·</span>
+      <span>Help</span>
+      <span class="dot">·</span>
+      <span>More</span>
+    </div>
+
+    <!-- Meta© 2022 -->
+    <div class="meta-copy">Meta© 2022</div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
